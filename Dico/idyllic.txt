@@ -1,0 +1,10 @@
+API
+https://www.dictionaryapi.com/api/v3/references/sd4/json/baseball?key=your-api-key
+
+API key 
+https://dictionaryapi.com/api/v3/references/sd4/json/test?key=e95a0746-eac8-4dcf-8864-b64880264d1e
+
+
+https://api.dictionaryapi.dev/api/v2/entries/en/hello
+
+https://idyllic-dictionary.netlify.app/
