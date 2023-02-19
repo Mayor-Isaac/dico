@@ -6,12 +6,27 @@ const searchIcon = document.querySelector('.find')
 const aye = document.querySelector('.aye')
 const audio = document.querySelector('.audio')
 const renderMeaning = function (input) {
+  // IMPLEMENTING WORD AND PHONETIC
   document.querySelector('h1').textContent = input.word
   document.querySelector('.phonetics').textContent = input.phonetic
+  // IMPLEMENTING AUDIO
+  audio.style.display = 'flex'
+  const loop = []
+  input.phonetics.map(function(phonetic){
+    loop.push(phonetic.audio);
+  })
+  const firstAudio = loop.find(yoo => yoo != '')
+  audio.addEventListener('click', function(){
+    const allAudio = document.querySelector('audio')
+    allAudio.src = `${firstAudio}`
+    allAudio.play()
+  })
+  // CLEARING THE MAIN CONTENT
   main.innerHTML = ''
   const hey = input.meanings
   hey.map(function(meanings){
     const ul = document.createElement('ul')
+  // IMPLEMENTING SYNONYMS
     const hmm = meanings.synonyms
     const synonyms = document.createElement('div')
     synonyms.classList.add('synonyms')
@@ -29,6 +44,7 @@ const renderMeaning = function (input) {
     }else{
       synonyms.innerHTML = ``
     }
+  // IMPLEMENTING LIST OF THE MEANING(S)
     const buus = meanings.definitions
     buus.map(function(buu){
       const li = document.createElement('li')
@@ -43,6 +59,7 @@ const renderMeaning = function (input) {
     box.append(ul)
     box.append(synonyms)
     main.append(box)
+  // IMPLEMENTING MEANING OF LINKS
     const kemi = document.querySelectorAll('.synonyms span')
     kemi.forEach(function(ay){
       ay.addEventListener('click', function(){
@@ -56,15 +73,10 @@ const renderMeaning = function (input) {
       })
     })
   })
+  // IMPLEMENTING FOOTER LINKS
   const anchor = document.querySelector('.footer a')
   anchor.textContent = `${input.sourceUrls}`
   anchor.href = `${input.sourceUrls}`
-  audio.addEventListener('click', function(){
-    const allAudio = document.querySelector('audio')
-    if(input.phonetics[0].audio != ''){
-    allAudio.src = `${input.phonetics[0].audio}`
-    allAudio.play()}
-  })
 };
 const getMeaning = function (word) {
   fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
@@ -76,15 +88,16 @@ const getMeaning = function (word) {
     })
     .then(data => renderMeaning(data[0]))
     .catch(err =>{
+      // DISPLAYING ERROR
       const error = document.createElement('section')
       error.classList.add('err')
       error.innerHTML = `<span class="cursive">' ${cicy.value} '</span> not found`
       aye.append(error)
       setTimeout(function(){
         error.remove()
+        cicy.value = ''
       },4000)
     });
-    audio.style.display = 'flex'
 };
 searchIcon.addEventListener('click', function(){
   getMeaning(cicy.value)
@@ -94,6 +107,7 @@ document.addEventListener('keypress', function(e){
     getMeaning(cicy.value)
   }
 })
+// IMPLEMENTING SMOOTH SCROLLING
 document.querySelector('.up').addEventListener('click', function(){
   window.scroll({
     top: 0,
